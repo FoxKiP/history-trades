@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>History trades</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="webjars/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="webjars/datatables/1.10.21/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="webjars/noty/3.1.4/lib/noty.css"/>
+    <link rel="stylesheet" href="resources/css/style.css"/>
+    <!-- JS -->
+    <script type="text/javascript" src="webjars/jquery/3.5.1/dist/jquery.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="webjars/datatables/1.10.21/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="webjars/datatables/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="webjars/moment/2.27.0/moment.js"></script>
+    <script type="text/javascript" src="webjars/noty/3.1.4/lib/noty.min.js"></script>
+    <script type="text/javascript" src="resources/js/index.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm" id="upload">
+            <div class="upload">
+                <h5>Security upload</h5>
+                <form enctype="multipart/form-data" method="POST" id="uploadSecurity">
+                    <input id="securityFile" type="file" name="file" accept="application/xml">
+                    <br/>
+                    <input class="btn btn-success" type="button" value="upload" onclick="uploadSecurities()">
+                </form>
+            </div>
+            <div class="upload">
+                <h5>History upload</h5>
+                <form enctype="multipart/form-data" method="POST" id="uploadHistory">
+                    <input type="file" name="file" accept="application/xml">
+                    <br/>
+                    <input class="btn btn-success" type="button" value="upload" onclick="uploadHistories()">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div>
+                <button class='btn btn-xs btn-success inline' onclick="createSecurity()">Create security</button>
+                <button class='btn btn-xs btn-primary inline' onclick="editSecurity()">Edit</button>
+                <button class='btn btn-xs btn-danger inline' onclick="deleteSecurity()">Delete</button>
+                <select class="form-control security-input" id="select-emitent"></select>
+                <input  class="form-control security-input" type="date" id="date"/>
+                <button class="btn btn-info" id="filter" onclick="updateTable()">Filter</button>
+                <div class="search">
+                    <a>Search: </a>
+                    <input type="text" id="search"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class='btn btn-xs btn-success inline' id="createHistory" onclick="createHistory()">Create history</button>
+<table class="table-bordered table-striped" id="datatable">
+    <thead>
+        <th>id on exchange</th>
+        <th>reg number</th>
+        <th>name</th>
+        <th>emitent title</th>
+        <th>trade date</th>
+        <th>num trades</th>
+        <th>open</th>
+        <th>close</th>
+        <th></th>
+        <th></th>
+    </thead>
+</table>
+</body>
+
+<div class="modal" tabindex="-1" role="dialog" id="editHistory">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="historyForm">
+                    <input type="hidden" name="securityId">
+                    <input type="hidden" id="historyId" name="id">
+
+                    <div class="form-group">
+                        <label for="boardId" class="col-form-label">Board ID</label>
+                        <input type="text" class="form-control" id="boardId" name="boardId"
+                               placeholder="Board ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tradeDate" class="col-form-label">Trade date</label>
+                        <input type="date" class="form-control" id="tradeDate" name="tradeDate"
+                               placeholder="Trade date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numTrades" class="col-form-label">Number trades</label>
+                        <input type="text" class="form-control" id="numTrades" name="numTrades"
+                               placeholder="Number trades">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="value" class="col-form-label">Value</label>
+                        <input type="text" class="form-control" id="value" name="value"
+                               placeholder="Value">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="low" class="col-form-label">Low</label>
+                        <input type="text" class="form-control" id="low" name="low"
+                               placeholder="Low">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="high" class="col-form-label">High</label>
+                        <input type="text" class="form-control" id="high" name="high"
+                               placeholder="High">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="open" class="col-form-label">Open</label>
+                        <input type="text" class="form-control" id="open" name="open"
+                               placeholder="Open">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="close" class="col-form-label">Close</label>
+                        <input type="text" class="form-control" id="close" name="close"
+                               placeholder="Close">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="volume" class="col-form-label">Volume</label>
+                        <input type="text" class="form-control" id="volume" name="volume"
+                               placeholder="Volume">
+                    </div>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveHistory()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="editSecurity">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Security</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="securityForm">
+                    <input type="hidden" id="securityId" name="id">
+
+                    <div class="form-group">
+                        <label for="idOnExchange" class="col-form-label">ID on exchange</label>
+                        <input type="text" class="form-control" id="idOnExchange" name="idOnExchange"
+                               placeholder="ID on exchange">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regNumber" class="col-form-label">Registration number</label>
+                        <input type="text" class="form-control" id="regNumber" name="regNumber"
+                               placeholder="Registration number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Name (only cyrillic, digits and whitespace)</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                               placeholder="Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="isin" class="col-form-label">Isin</label>
+                        <input type="text" class="form-control" id="isin" name="isin"
+                               placeholder="Isin">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emitentTitle" class="col-form-label">Emitent title</label>
+                        <input type="text" class="form-control" id="emitentTitle" name="emitentTitle"
+                               placeholder="Emitent title">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveSecurity()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

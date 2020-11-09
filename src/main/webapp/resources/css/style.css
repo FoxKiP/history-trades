@@ -1,0 +1,46 @@
+.inline {
+    display: inline-block;
+}
+td, th {
+    padding: 8px;
+}
+
+body {
+    margin-top: 15px;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.container {
+    padding: 0;
+    margin-left: 10px;
+}
+
+.col-sm {
+    width: 150px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+#datatable_filter {
+    display: none;
+}
+
+#datatable {
+    margin-top: 5px;
+}
+
+.security-input {
+    width: 300px;
+    margin-top: 5px;
+}
+
+#upload {
+    padding: 5px;
+}
+
+.search {
+    margin-top: 10px;
+}
