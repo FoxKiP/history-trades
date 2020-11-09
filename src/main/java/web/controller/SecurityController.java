@@ -57,7 +57,7 @@ public class SecurityController {
 
         Security security = new Security(id, idOnExchange, regNumber, name, isin, emitentTitle);
 
-        if(security.isNew()) {
+        if (security.isNew()) {
             ValidationUtil.nameValidation(name);
             service.create(security);
         } else {

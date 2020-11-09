@@ -18,7 +18,6 @@ public interface JpaHistoryRepository extends JpaRepository<History, Integer> {
     @Query("DELETE FROM History h WHERE h.id=:id")
     int delete(@Param("id") int id);
 
-   // @Query("SELECT h FROM History h WHERE h.security.id = :securityId AND h.tradeDate = :tradeDate")
     List<History> getAllBySecurityIdAndTradeDate(int securityId, LocalDate tradeDate);
 
     List<History> getAllBySecurityId(int securityId);

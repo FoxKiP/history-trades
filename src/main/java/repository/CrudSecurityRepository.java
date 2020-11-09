@@ -22,11 +22,6 @@ public class CrudSecurityRepository implements SecurityRepository {
     }
 
     @Override
-    public void saveAll(List<Security> securities) {
-        securityRepository.saveAll(securities);
-    }
-
-    @Override
     public boolean delete(int id) {
         return securityRepository.delete(id) != 0;
     }
@@ -40,9 +35,4 @@ public class CrudSecurityRepository implements SecurityRepository {
     public List<Security> getAll() {
         return securityRepository.findAll();
     }
-
-    /*@Override
-    public List<Security> getAllWithHistory() {
-        return securityRepository.getAllWithHistory();
-    }*/
 }

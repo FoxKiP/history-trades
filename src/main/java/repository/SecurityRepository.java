@@ -11,7 +11,5 @@ public interface SecurityRepository {
 
     Security get(int id);
 
-    void saveAll(List<Security> securities);
-
     List<Security> getAll();
 }

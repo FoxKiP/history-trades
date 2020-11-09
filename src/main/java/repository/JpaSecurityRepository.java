@@ -16,8 +16,4 @@ public interface JpaSecurityRepository extends JpaRepository<Security, Integer> 
     int delete(@Param("id") int id);
 
     Security findByIdOnExchange(String idOnExchange);
-
-    /*@EntityGraph(attributePaths = {"history"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT '*' FROM Security")
-    List<Security> getAllWithHistory();*/
 }

@@ -76,9 +76,6 @@ public class HistoryTestData {
     public static final History HISTORY_UPLOADED = new History(null, NEW_ID, "TQDE", TRADE_DATE.minusDays(1), 120, 522978, 4.1, 4.24, 4.1, 4.1, 126200);
     public static final History HISTORY_PARSED = new History(null, null, "TQDE", TRADE_DATE.minusDays(1), 120, 522978, 4.1, 4.24, 4.1, 4.1, 126200);
 
-    /*<row BOARDID="TQDE" TRADEDATE="2020-04-14" SHORTNAME="АСКО ао" SECID="ACKO" NUMTRADES="120" VALUE="522978" OPEN="4.1" LOW="4.1" HIGH="4.24" LEGALCLOSEPRICE="4.12" WAPRICE="4.14" CLOSE="4.1" VOLUME="126200" MARKETPRICE2="4.14" MARKETPRICE3="4.14" ADMITTEDQUOTE="4.12" MP2VALTRD="522978" MARKETPRICE3TRADESVALUE="522978" ADMITTEDVALUE="522978" WAVAL="" />*/
-
-
     public static List<History> getHistories() {
         return List.of(HISTORY_1, HISTORY_2, HISTORY_3);
     }
