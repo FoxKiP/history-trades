@@ -16,7 +16,6 @@ public class CrudSecurityRepository implements SecurityRepository {
     }
 
     @Override
-    @Transactional
     public Security save(Security security) {
         return securityRepository.save(security);
     }
